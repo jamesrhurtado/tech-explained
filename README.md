@@ -13,7 +13,7 @@ Tech en 60 is a focused practice tool for learning technical concepts through ex
 
 ## Features
 
-- 36 concepts across AI, programming, Git/GitHub, and software fundamentals.
+- 30 concepts across AI, software engineering, and Git/GitHub.
 - Animated vertical topic reel with no immediate repeats.
 - Dedicated 15-minute research and 60-second explanation modes.
 - Pause, continue, and reset controls.
@@ -73,7 +73,7 @@ Update `data/concepts.ts`. Each concept needs a name, an existing category, and 
 ```ts
 {
   name: "Event loop",
-  category: "Programación",
+  category: "Ingeniería de software",
   prompt: "¿Qué es, qué problema resuelve y dónde se utiliza?",
 }
 ```

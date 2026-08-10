@@ -11,6 +11,13 @@ const SPEAK_SECONDS = 60;
 const REEL_LENGTH = 11;
 const REEL_DURATION = 1120;
 
+const categoryLabels: Record<Category, string> = {
+  Todos: "Todos",
+  "Inteligencia Artificial": "IA",
+  "Ingeniería de software": "Software",
+  "Git y GitHub": "Git / GitHub",
+};
+
 function getLocalStorage(): Storage | null {
   if (typeof window === "undefined") return null;
 
@@ -285,7 +292,7 @@ export function TechEn60() {
           {mode === "pick" ? (
             <>
               <div className="card-heading">
-                <p className="eyebrow">Concepto / {category}</p>
+                <p className="eyebrow">Concepto / {categoryLabels[category]}</p>
                 <p className="topic-count">{String(filtered.length).padStart(2, "0")} temas</p>
               </div>
               <span className="reel-pointer" aria-hidden="true">→</span>
