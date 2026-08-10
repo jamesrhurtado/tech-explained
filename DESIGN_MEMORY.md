@@ -11,6 +11,7 @@
 - The vertical concept reel is the product identity.
 - Topic names always align to the horizontal center, including adjacent items during the spin.
 - Use a coral pointer and restrained guide rules to make the selected reel row obvious.
+- Scale long topic names down by content length so every reel row keeps the same rhythm without clipping.
 
 ## Layout and Typography
 
@@ -22,6 +23,7 @@
 ## Color and Interaction
 
 - Use deep green-black surfaces, warm cream text, and coral for selection and primary action.
+- Secondary text may stay quiet, but must remain readable against the dark surface.
 - Motion should explain the reel's movement or timer state; avoid decorative animation.
 - Keep explicit focus states, minimum 44px touch targets, and a reduced-motion path.
 
@@ -37,4 +39,3 @@
 - Global design tokens and page styling live in `app/globals.css`.
 - Product interaction logic lives in `components/tech-en-60.tsx`.
 - Add no UI dependency unless it materially improves functionality.
-

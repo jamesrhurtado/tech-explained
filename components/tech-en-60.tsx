@@ -30,6 +30,12 @@ function randomFrom(items: Concept[]) {
   return items[Math.floor(Math.random() * items.length)];
 }
 
+function topicLengthClass(name: string) {
+  if (name.length >= 27) return "is-long";
+  if (name.length >= 20) return "is-medium";
+  return "";
+}
+
 function buildReel(items: Concept[], current: Concept | null, winner: Concept) {
   const reel: Concept[] = [];
   const firstPool = items.filter((item) => item.name !== winner.name);
@@ -51,7 +57,7 @@ function TopicTitle({ concept }: { concept: Concept | null }) {
   const words = concept.name.split(/\s+/);
 
   return (
-    <h1 id="card-title" className="topic-title is-revealing" aria-label={concept.name}>
+    <h1 id="card-title" className={`topic-title is-revealing ${topicLengthClass(concept.name)}`} aria-label={concept.name}>
       {words.map((word, index) => (
         <span className="title-word-wrap" aria-hidden="true" key={`${word}-${index}`}>
           <span className="title-word" style={{ animationDelay: `${index * 70}ms` }}>{word}</span>
@@ -72,7 +78,7 @@ function TopicReel({ items }: { items: Concept[] }) {
         style={{ "--reel-stop": `-${stop}%` } as React.CSSProperties}
       >
         {items.map((item, index) => (
-          <div className={`reel-item ${index === items.length - 1 ? "is-winner" : ""}`} key={`${item.name}-${index}`}>
+          <div className={`reel-item ${topicLengthClass(item.name)} ${index === items.length - 1 ? "is-winner" : ""}`} key={`${item.name}-${index}`}>
             {item.name}
           </div>
         ))}
@@ -134,7 +140,7 @@ export function TechEn60() {
   }, [category]);
 
   useEffect(() => {
-    if (timerState !== "running" || countdown !== null) return;
+    if (mode === "pick" || timerState !== "running" || countdown !== null) return;
     const interval = window.setInterval(() => {
       setSeconds((value) => {
         if (value <= 1) {
@@ -192,6 +198,12 @@ export function TechEn60() {
     setCountdown(3);
   }, []);
 
+  const returnToPick = useCallback(() => {
+    setMode("pick");
+    setTimerState("idle");
+    setCountdown(null);
+  }, []);
+
   useEffect(() => {
     if (mode !== "speak" || countdown === null) return;
     const interval = window.setInterval(() => {
@@ -215,14 +227,14 @@ export function TechEn60() {
   const resetTimer = useCallback(() => {
     setSeconds(mode === "research" ? RESEARCH_SECONDS : SPEAK_SECONDS);
     setTimerState("idle");
-    setCountdown(null);
+    setCountdown(mode === "speak" ? 3 : null);
   }, [mode]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement;
       const isControl = ["BUTTON", "A", "INPUT", "SELECT", "TEXTAREA"].includes(target.tagName);
-      if (event.key === "Escape" && mode !== "pick") setMode("pick");
+      if (event.key === "Escape" && mode !== "pick") returnToPick();
       if (event.code === "Space" && mode !== "pick" && !isControl && countdown === null) {
         event.preventDefault();
         toggleTimer();
@@ -230,7 +242,7 @@ export function TechEn60() {
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [mode, countdown, toggleTimer]);
+  }, [mode, countdown, returnToPick, toggleTimer]);
 
   useEffect(() => () => { if (shuffleRef.current) clearTimeout(shuffleRef.current); }, []);
 
@@ -307,10 +319,10 @@ export function TechEn60() {
           ) : (
             <>
               <div className="timer-topline">
-                <button className="back-button" onClick={() => setMode("pick")} aria-label="Volver a la selección">← Volver</button>
+                <button className="back-button" onClick={returnToPick} aria-label="Volver a la selección">← Volver</button>
                 <p className="eyebrow"><span /> {mode === "research" ? "Modo investigación" : "Modo explicación"}</p>
               </div>
-              <h1 id="card-title" className="timer-topic">{selected?.name}</h1>
+              <h1 id="card-title" className={`timer-topic ${selected ? topicLengthClass(selected.name) : ""}`}>{selected?.name}</h1>
 
               {countdown !== null ? (
                 <div className="countdown" aria-live="assertive"><span>{countdown}</span><small>Prepárate</small></div>
