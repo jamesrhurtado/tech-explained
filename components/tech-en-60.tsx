@@ -254,7 +254,7 @@ export function TechEn60() {
       <div className="page-frame">
         <header className="site-header">
           <a className="wordmark" href="#main-card" aria-label="Tech en 60, inicio">Tech en <span>60</span></a>
-          <p>Investiga. Entiende. Explícalo.</p>
+          <p>Gira · Aprende · Cuenta</p>
         </header>
 
         {mode === "pick" && (
@@ -273,9 +273,10 @@ export function TechEn60() {
           {mode === "pick" ? (
             <>
               <div className="card-heading">
-                <p className="eyebrow"><span /> Tu próximo concepto</p>
-                <p className="topic-count">{filtered.length} temas</p>
+                <p className="eyebrow">Concepto / {category}</p>
+                <p className="topic-count">{String(filtered.length).padStart(2, "0")} temas</p>
               </div>
+              <span className="reel-pointer" aria-hidden="true">→</span>
               <div className={`topic-stage ${isShuffling ? "is-spinning" : ""}`} aria-busy={isShuffling}>
                 {isShuffling ? (
                   <>
@@ -289,17 +290,19 @@ export function TechEn60() {
                   </div>
                 )}
               </div>
-              <button className="primary-button" onClick={pickTopic} disabled={isShuffling}>
-                <span>{isShuffling ? "Girando…" : selected ? "Elegir otro" : "Elegir un tema"}</span>
-                <ArrowIcon />
-              </button>
+              <div className="selection-controls">
+                <button className="primary-button shuffle-button" onClick={pickTopic} disabled={isShuffling}>
+                  <span>{isShuffling ? "Girando…" : selected ? "Girar otra vez" : "Girar el reel"}</span>
+                  <ArrowIcon />
+                </button>
 
-              {selected && !isShuffling && (
-                <div className="next-actions" aria-label="Siguiente paso">
-                  <button onClick={openResearch}><span className="action-number">15</span><span><strong>Investigar</strong><small>minutos</small></span></button>
-                  <button onClick={openSpeak}><span className="action-number">60</span><span><strong>Explicar</strong><small>segundos</small></span></button>
-                </div>
-              )}
+                {selected && !isShuffling && (
+                  <div className="next-actions" aria-label="Siguiente paso">
+                    <button onClick={openResearch}><span className="action-number">15</span><span><strong>Investigar</strong><small>minutos</small></span></button>
+                    <button onClick={openSpeak}><span className="action-number">60</span><span><strong>Explicar</strong><small>segundos</small></span></button>
+                  </div>
+                )}
+              </div>
             </>
           ) : (
             <>
@@ -352,7 +355,7 @@ export function TechEn60() {
         </section>
 
         <div className="utility-note" aria-hidden="true">
-          <span>Aprende hablando</span><span className="rule" /><span>Sin guiones</span>
+          <span>Investiga. Entiende. Explícalo.</span><span className="rule" /><span>Sin guiones</span>
         </div>
         <p className="sr-only" aria-live="polite">{announcement}</p>
       </div>
