@@ -8,7 +8,7 @@ export const categories = [
 export type Category = (typeof categories)[number];
 export type TopicCategory = Exclude<Category, "Todos">;
 
-export type Concept = {
+type ConceptDefinition = {
   name: string;
   category: TopicCategory;
   prompt: string;
@@ -16,7 +16,7 @@ export type Concept = {
 
 const prompt = "¿Qué es, qué problema resuelve y dónde se utiliza?";
 
-export const concepts: Concept[] = [
+export const concepts = [
   { name: "Tokens", category: "Inteligencia Artificial", prompt },
   { name: "Prompt", category: "Inteligencia Artificial", prompt },
   { name: "Ventana de contexto", category: "Inteligencia Artificial", prompt },
@@ -49,4 +49,6 @@ export const concepts: Concept[] = [
   { name: "Cherry-pick", category: "Git y GitHub", prompt },
   { name: "Fork", category: "Git y GitHub", prompt },
   { name: ".gitignore", category: "Git y GitHub", prompt },
-];
+] as const satisfies readonly ConceptDefinition[];
+
+export type Concept = (typeof concepts)[number];
