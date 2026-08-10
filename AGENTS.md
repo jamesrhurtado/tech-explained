@@ -16,7 +16,12 @@ Tech en 60 is a Spanish learning tool: choose a technical concept, research it f
 - `app/page.tsx`: main route.
 - `app/layout.tsx`: metadata, fonts, and root layout.
 - `app/globals.css`: tokens, responsive layout, motion, and component styles.
-- `components/tech-en-60.tsx`: selector, reel, persistence, and timer behavior.
+- `components/tech-en-60.tsx`: client-side flow coordination and browser effects.
+- `components/topic-picker.tsx`: category and topic selection UI.
+- `components/challenge-timer.tsx`: research and explanation timer UI.
+- `lib/challenge-state.ts`: pure timer state machine.
+- `lib/persisted-selection.ts`: validated browser-storage boundary.
+- `lib/topic-selection.ts`: uniform random and reel selection functions.
 - `data/concepts.ts`: categories, concept names, and prompts.
 - `DESIGN_MEMORY.md`: binding visual and interaction direction; read it before UI changes.
 
@@ -47,6 +52,7 @@ Tech en 60 is a Spanish learning tool: choose a technical concept, research it f
 ## Validation
 
 - Run `npm run lint` after code or content changes.
+- Run `npm run typecheck` and `npm test` after behavior changes.
 - Run `npm run build` before handing off a completed change.
 - Run `git diff --check` and inspect the final diff for accidental churn.
 - When editing `data/concepts.ts`, verify 10 unique concepts per category and 30 total.

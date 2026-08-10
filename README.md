@@ -27,13 +27,14 @@ Tech en 60 is a focused practice tool for learning technical concepts through ex
 
 - Next.js with App Router
 - React and TypeScript
-- Tailwind CSS
+- Purpose-built CSS with no UI framework
 - Local Instrument Serif and Manrope font packages
 - CSS animations with no animation library
 
 ## Getting started
 
-Requires Node.js 20.9 or newer.
+Requires Node.js 24 LTS and npm 11. The repository includes `.nvmrc` and
+`.node-version` files for compatible version managers.
 
 ```bash
 git clone https://github.com/jamesrhurtado/tech-explained.git
@@ -52,6 +53,9 @@ Open [http://localhost:3000](http://localhost:3000).
 | `npm run build` | Create a production build |
 | `npm run start` | Run the production build |
 | `npm run lint` | Check the code with ESLint |
+| `npm run typecheck` | Run strict TypeScript checks |
+| `npm test` | Run the unit and interaction test suite |
+| `npm run test:watch` | Run tests while editing |
 
 ## Project structure
 
@@ -61,10 +65,35 @@ app/
   layout.tsx               Metadata, fonts, and root layout
   page.tsx                 Main route
 components/
-  tech-en-60.tsx           Topic selector and timer experience
+  challenge-timer.tsx      Research and explanation timer UI
+  tech-en-60.tsx           Client-side experience coordinator
+  topic-picker.tsx         Category and topic selection UI
+  topic-reel.tsx           Reel and word-reveal presentation
 data/
   concepts.ts              Categories, concepts, and prompts
+lib/
+  challenge-state.ts       Timer state machine
+  persisted-selection.ts   Validated local-storage boundary
+  topic-selection.ts       Uniform random and reel selection
+tests/
+  setup.ts                 Browser test environment
 ```
+
+## Quality and security
+
+The app has no backend, authentication, cookies, remote data, or user-submitted
+HTML. Next.js adds a restrictive Content Security Policy and baseline browser
+security headers. CI runs linting, type checks, tests, a production dependency
+audit, and the production build on every pull request and push to `main`.
+
+Use `npm ci` in CI or deployment environments so installation follows the
+committed lockfile exactly. See `SECURITY.md` for reporting guidance and the
+project's security boundaries.
+
+For production, terminate HTTPS at a managed host or reverse proxy and do not
+expose `next start` directly to the public internet. The application currently
+keeps the Next.js server deployment path so its security headers are applied
+consistently; the `/` route itself remains statically prerendered.
 
 ## Adding or editing concepts
 
